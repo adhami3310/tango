@@ -1,12 +1,13 @@
-// some code copied from https://github.com/6851-2021/tango-trees/blob/master/src/bst.hpp
+// some code copied from
+// https://github.com/6851-2021/tango-trees/blob/master/src/bst.hpp
 
 #include <iostream>
 using namespace std;
 
-//key, value, info
-template<typename K, typename V, typename A>
+// key, value, info
+template <typename K, typename V, typename A>
 class BSTNode {
-public:
+   public:
     K key;
     V val;
     A info;
@@ -14,38 +15,48 @@ public:
     BSTNode* right;
     BSTNode* parent;
 
-    BSTNode(K key, V val) : key(key), val(val), info(A()), left(nullptr), right(nullptr), parent(nullptr) {}
+    BSTNode(K key, V val)
+        : key(key),
+          val(val),
+          info(A()),
+          left(nullptr),
+          right(nullptr),
+          parent(nullptr) {}
 
-    BSTNode(K key, V val, A info) : key(key), val(val), info(info), left(nullptr), right(nullptr), parent(nullptr) {}
+    BSTNode(K key, V val, A info)
+        : key(key),
+          val(val),
+          info(info),
+          left(nullptr),
+          right(nullptr),
+          parent(nullptr) {}
 
     void print() {
         cout << "(" << key << ", " << val << ", " << info << ")";
         cout << " {";
-        if(left != nullptr) {
+        if (left != nullptr) {
             left->print();
         }
         cout << ",";
-        if(right != nullptr) {
+        if (right != nullptr) {
             right->print();
         }
         cout << "}";
     }
 
-    bool is_left_child() {
-        return parent != nullptr && parent->left == this;
-    }
+    bool is_left_child() { return parent != nullptr && parent->left == this; }
 
-    BSTNode *sibling() {
+    BSTNode* sibling() {
         if (parent == nullptr) return nullptr;
         if (parent->left == this) return parent->right;
-        return parent -> left;
+        return parent->left;
     }
 
     // Replaces this with node by updating only pointers
     // between this and this->parent
     void replace(BSTNode* node) {
         if (parent != nullptr) {
-            if(parent->left == this) {
+            if (parent->left == this) {
                 parent->left = node;
             } else {
                 parent->right = node;
@@ -58,9 +69,9 @@ public:
 
     // Simple tree traversal: returns node with key new_key
     // or leaf node where new_key would be inserted
-    BSTNode *search(K new_key) {
+    BSTNode* search(K new_key) {
         auto current = this;
-        while(true) {
+        while (true) {
             if (current->key == new_key) {
                 return current;
             }
@@ -101,7 +112,7 @@ public:
     }
 
     // Minimum element in subtree
-    BSTNode *min() {
+    BSTNode* min() {
         auto current = this;
         while (current->left != nullptr) {
             current = current->left;
@@ -110,7 +121,7 @@ public:
     }
 
     // Maximum element in subtree
-    BSTNode *max() {
+    BSTNode* max() {
         auto current = this;
         while (current->right != nullptr) {
             current = current->right;
@@ -119,13 +130,13 @@ public:
     }
 
     // Predecessor
-    BSTNode *pred() {
+    BSTNode* pred() {
         if (left == nullptr) return nullptr;
-        return left->max(); 
+        return left->max();
     }
 
     // Successor
-    BSTNode *succ() {
+    BSTNode* succ() {
         if (right == nullptr) return nullptr;
         return right->min();
     }
@@ -138,12 +149,12 @@ public:
     }
 };
 
-template<typename K, typename V, typename A>
+template <typename K, typename V, typename A>
 class BST {
-public:
+   public:
     BST() : root(nullptr) {}
 
-    virtual void rotate(BSTNode<K, V, A> *node) {
+    virtual void rotate(BSTNode<K, V, A>* node) {
         node->rotate();
         if (node->parent == nullptr) {
             root = node;
@@ -153,7 +164,7 @@ public:
     // Puts second in place of first and disconnects first
     void replace(BSTNode<K, V, A>* first, BSTNode<K, V, A>* second) {
         if (first->parent != nullptr) {
-            if(first->parent->left == this) {
+            if (first->parent->left == this) {
                 first->parent->left = second;
             } else {
                 first->parent->right = second;
@@ -170,11 +181,14 @@ public:
 
     virtual void remove(K key) = 0;
 
-    virtual BSTNode<K, V, A> *find(K key) = 0;
+    virtual BSTNode<K, V, A>* find(K key) = 0;
 
     // Swaps the places of the two nodes
-    void swap(BSTNode<K, V, A>* first, BSTNode<K, V, A>* second);
+    void swap(BSTNode<K, V, A>* first, BSTNode<K, V, A>* second) {
+        first->swap(second);
+        if (root == first) root = second;
+        else if(root == second) root = first;
+    }
 
-    BSTNode<K, V, A> *root;
+    BSTNode<K, V, A>* root;
 };
-
