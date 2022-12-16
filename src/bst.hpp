@@ -76,12 +76,12 @@ class BSTNode {
                 return current;
             }
             if (current->key > new_key) {
-                if (current->left != nullptr) {
+                if (current->left == nullptr) {
                     return current;
                 }
                 current = current->left;
             } else {
-                if (current->right != nullptr) {
+                if (current->right == nullptr) {
                     return current;
                 }
                 current = current->right;
@@ -93,7 +93,15 @@ class BSTNode {
     void rotate() {
         if (parent == nullptr) return;
         auto p = parent;
-        p->replace(this);
+        auto grandparent = p->parent;
+        if (grandparent) {
+            if (grandparent->right == p) {
+                grandparent->right = this;
+            } else {
+                grandparent->left = this;
+            }
+        }
+        p->parent = this;
         if (parent->left == this) {
             // left rotation
             if (right != nullptr) {
@@ -142,10 +150,10 @@ class BSTNode {
     }
 
     // Swap places between this and node
-    void swap(BSTNode* node) {
-        swap(parent, node->parent);
-        swap(left, node->left);
-        swap(right, node->right);
+    void swapValues(BSTNode* node) {
+        swap(key, node->key);
+        swap(val, node->val);
+        swap(info, node->info);
     }
 };
 
@@ -184,10 +192,8 @@ class BST {
     virtual BSTNode<K, V, A>* find(K key) = 0;
 
     // Swaps the places of the two nodes
-    void swap(BSTNode<K, V, A>* first, BSTNode<K, V, A>* second) {
-        first->swap(second);
-        if (root == first) root = second;
-        else if(root == second) root = first;
+    void swapValues(BSTNode<K, V, A>* first, BSTNode<K, V, A>* second) {
+        first->swapValues(second);
     }
 
     BSTNode<K, V, A>* root;
