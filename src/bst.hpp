@@ -117,6 +117,7 @@ class BSTNode {
             p->right = left;
             left = p;
         }
+        parent = grandparent;
     }
 
     // Minimum element in subtree
