@@ -17,30 +17,57 @@ class SplayTree : public BST<K, V, SplayNodeInfo> {
 private:
     bool locked = false;
 
+    void checkIntegrity(SplayNode<K, V> *node) {
+        if (node == nullptr) return;
+        
+        if (node->left) {
+            assert(node->key > node->left->key);
+            assert(node->key > node->left->max()->key);
+            assert(node->left->parent == node);
+        }
+        if (node->right) {
+            assert(node->key < node->right->key);
+            assert(node->key < node->right->min()->key);
+            assert(node->right->parent == node);
+        }
+        checkIntegrity(node->left);
+        checkIntegrity(node->right);
+    }
+
     void splayUpto(SplayNode<K, V> *node, SplayNode<K, V> *root) {
         if (node == nullptr || root == nullptr) throw;
         if (node == root) return;
         
         while (true) {
             if (node->parent == nullptr) throw;
+            operations++; // follow parent pointer
             if (node->parent == root) {
                 // single rotation
                 node->rotate();
+                // one operation for rotate
+                operations++;
                 break;
             } else {
                 auto par = node->parent;
                 if (par->parent == nullptr) throw;
 
                 bool finished = par->parent == root;
+
+                operations++; // follow grandparent pointer
                 
                 if (node->is_left_child() == par->is_left_child()) {
                     // zig-zig and zag-zag
+                    operations++; // pointer from grandparent back to parent
                     par->rotate();
+                    operations++; // pointer from parent to node
                     node->rotate();
+                    operations += 2; // rotations
                 } else {
                     // zig-zag and zag-zig
+                    operations += 2; // pointers from grandparent back to node
                     node->rotate();
                     node->rotate();
+                    operations += 2; // rotations
                 }
 
                 if (finished) break;
@@ -55,34 +82,19 @@ private:
     }
 
 public:
-    SplayTree() : BST<K, V, SplayNodeInfo>() {}
+    long long operations;
+
+    SplayTree() : BST<K, V, SplayNodeInfo>(), operations(0) {}
 
     void lock() {
+        operations = 0;
         locked = true;
-    }
-
-    void checkIntegrity(SplayNode<K, V> *node) {
-        if (node == nullptr) return;
-        
-        // if (node->left) {
-        //     assert(node->key > node->left->key);
-        //     assert(node->key > node->left->max()->key);
-        //     assert((node->left->parent) == node);
-        // }
-        // if (node->right) {
-        //     assert(node->key < node->right->key);
-        //     assert(node->key < node->right->min()->key);
-        //     assert((node->right->parent) == node);
-        // }
-        checkIntegrity(node->left);
-        checkIntegrity(node->right);
     }
 
     void checkIntegrity() {
         if (this->root) {
-            // assert(this->root->parent == nullptr);
+            assert(this->root->parent == nullptr);
             checkIntegrity(this->root);
-            cout << "passed" << endl;
         }
     }
 
@@ -199,10 +211,22 @@ public:
         }
     }
 
+    int getDepth(SplayNode<K, V> *node) {
+        int result = 0;
+        while (node != nullptr) {
+            node = node->parent;
+            result ++;
+        }
+        return result;
+    }
+
     SplayNode<K, V>* find(K key) {
         if (!locked) throw;
         if (this->root == nullptr) throw;
+
         auto found = this->root->search(key);
+
+        operations += getDepth(found);
 
         splay(found);
 
