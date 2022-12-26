@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    for (int N = 1000000; N <= 1000000; N++) {
+    for (int N = 100; N <= 1000000; N*=2) {
         auto splay = SplayTree<int, int>();
         for (int i = 0; i < N; i++) {
             splay.insert(i, i);
@@ -19,5 +19,6 @@ int main(int argc, char **argv) {
             // splay.pretty_print("  ");
         }
         splay.checkIntegrity();
+        cout << "Finished " << N << endl;
     }
 }
