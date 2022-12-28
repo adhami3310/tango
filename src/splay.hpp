@@ -18,7 +18,22 @@ private:
 
     void checkIntegrity(SplayNode<K, V> *node) {
         if (node == nullptr) return;
-        
+        while (node->left == nullptr || node->right == nullptr) {
+            if (node->left) {
+                assert(node->key > node->left->key);
+                assert(node->key > node->left->max()->key);
+                assert(node->left->parent == node);
+                node = node->left;
+            } else if (node->right) {
+                assert(node->key < node->right->key);
+                assert(node->key < node->right->min()->key);
+                assert(node->right->parent == node);
+                node = node->right;
+            } else {
+                break;
+            }
+        }
+
         if (node->left) {
             assert(node->key > node->left->key);
             assert(node->key > node->left->max()->key);
