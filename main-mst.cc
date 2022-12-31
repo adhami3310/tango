@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-#include "src/multisplay.hpp"
+#include "src/multisplaycount.hpp"
 using namespace std;
 
 int main(int argc, char **argv) {
@@ -10,16 +10,16 @@ int main(int argc, char **argv) {
             multisplay.insert(i, i);
         }
         multisplay.lock();
-        multisplay.checkIntegrity();
-        cout << "Passed insertion" << endl;
+        // multisplay.checkIntegrity();
+        // cout << "Passed insertion" << endl;
         // multisplay.pretty_print("   ", true);
 
         for (int i = 0; i < N; i++) {
-            int x = rand() % N;
+            int x = i % N;
             multisplay.find(x)->val;
             // multisplay.checkIntegrity();
         }
-        multisplay.checkIntegrity();
-        cout << N << "," << "fin" << endl;
+        // multisplay.checkIntegrity();
+        cout << N << "," << multisplay.operations << endl;
     }
 }
