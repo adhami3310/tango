@@ -58,6 +58,7 @@ private:
             if (node->parent == root) {
                 // single rotation
                 node->rotate();
+                operations++;
                 break;
             } else {
                 auto par = node->parent;
@@ -66,13 +67,17 @@ private:
                 bool finished = par->parent == root;
                 
                 if (node->is_left_child() == par->is_left_child()) {
+                    operations += 3; // up to grandparent, down to parent
                     // zig-zig and zag-zag
                     par->rotate();
                     node->rotate();
+                    operations += 3; // 2 rotate, 1 par->node
                 } else {
+                    operations += 4; // up to grandparent, down to node
                     // zig-zag and zag-zig
                     node->rotate();
                     node->rotate();
+                    operations += 2; // 2 rotate
                 }
 
                 if (finished) break;
@@ -97,21 +102,26 @@ private:
                     return current;
                 }
                 current = current->left;
+                operations++;
             } else {
                 if (current->right == nullptr) {
                     return current;
                 }
                 current = current->right;
+                operations++;
             }
         }
         return current;
     }
 
 public:
+    long long operations = 0;
+
     SplayTree() : BST<K, V, SplayNodeInfo>() {}
 
     void lock() {
         locked = true;
+        operations = 0;
     }
 
     void checkIntegrity() {
@@ -241,12 +251,9 @@ public:
         if (this->root == nullptr) throw;
         auto found = search(this->root, key);
 
-        splay(found);
+        if (found->key != key) throw;
 
-        if (found->key == key) {
-            return found;
-        } else {
-            return nullptr;
-        }
+        splay(found);
+        return found;
     }
 };
