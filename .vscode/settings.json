@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ejs": "html",
         "iostream": "cpp",
         "cwchar": "cpp",
         "string": "cpp",
@@ -63,6 +64,7 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "cfenv": "cpp"
     }
 }

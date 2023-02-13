@@ -1,18 +1,14 @@
 #include <iostream>
 #include <stdlib.h>
-#include "src/tangocount.hpp"
+// #include "tests/sequential.hpp"
+// #include "tests/finger.hpp"
+// #include "tests/random.hpp"
+#include "tests/entropy.hpp"
 using namespace std;
 
 int main(int argc, char **argv) {
-    for (int N = 5000; N <= 1000000; N = min(int(N*1.25), N+50000)) {
-        auto tango = TangoTree<int, int>();
-        for (int i = 0; i < N; i++) {
-            tango.insert(i, i);
-        }
-        tango.lock();
-        for (int i = 0; i < N; i++) {
-            tango.find(rand()%(N))->val;
-        }
-        cout << N << "," << tango.operations << endl;
-    }
+    // testSequential(4096, 20000000, 2, 25);
+    // testFinger(131072, 2, 4096, 2, 25);
+    // testRandom(10000, 1000000, 1.2, 25);
+    testEntropy(131072/4, 0.1, 0.999999, 1.5, 25);
 }

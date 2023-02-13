@@ -1,6 +1,9 @@
 // some code copied from
 // https://github.com/6851-2021/tango-trees/blob/master/src/bst.hpp
 
+#ifndef ADD_H
+#define ADD_H
+
 #include <iostream>
 using namespace std;
 
@@ -199,3 +202,5 @@ class BST {
 
     BSTNode<K, V, A>* root;
 };
+
+#endif
