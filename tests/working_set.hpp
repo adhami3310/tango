@@ -34,7 +34,7 @@ void testWorking(int N, int startingK, int maxK, float geometricFactor, int pass
 
     cout << endl;
 
-    cout << "# Splay Working Set (" << passes << ")" << endl;
+    cout << "# MultiSplay Working Set (" << passes << ")" << endl;
     for (int K = startingK; K <= maxK; K *= geometricFactor) {
         std::vector<int> v(N);
         std::iota (std::begin(v), std::end(v), 0);
@@ -60,7 +60,7 @@ void testWorking(int N, int startingK, int maxK, float geometricFactor, int pass
 
     cout << endl;
 
-    cout << "#Splay Working Set (" << passes << ")" << endl;
+    cout << "# Splay Working Set (" << passes << ")" << endl;
     for (int K = startingK; K <= maxK; K *= geometricFactor) {
         std::vector<int> v(N);
         std::iota (std::begin(v), std::end(v), 0);
