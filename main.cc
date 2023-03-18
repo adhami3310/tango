@@ -8,7 +8,8 @@
 // #include "tests/entropy_n.hpp"
 // #include "tests/working_set.hpp"
 // #include "tests/working_set_n.hpp"
-#include "tests/working_set_loglogn.hpp"
+// #include "tests/working_set_loglogn.hpp"
+#include "tests/unified_loglogn.hpp"
 // #include "tests/unified.hpp"
 // #include "tests/unified_n.hpp"
 using namespace std;
@@ -23,6 +24,7 @@ int main(int argc, char **argv) {
     // testWorking(131072, 1, 131072, 2, 100);
     // testWorking(1, 131072, 1, 131072, 2, 100);
     // testWorking(1, 4, 4, 0.05, 100, 20);
+    testUnified(1, 4.2, 32, 0.05);
     // testUnified(131072, 1, 131072, 2, 25);
     // testUnified(131072, 131072*16, 1024, 1024, 2, 100);
 
