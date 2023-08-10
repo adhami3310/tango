@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-// #include "tests/sequential.hpp"
+#include "tests/sequential.hpp"
 // #include "tests/finger.hpp"
 // #include "tests/finger_n.hpp"
 // #include "tests/random.hpp"
@@ -8,13 +8,13 @@
 // #include "tests/entropy_n.hpp"
 // #include "tests/working_set.hpp"
 // #include "tests/working_set_n.hpp"
-#include "tests/working_set_loglogn.hpp"
+// #include "tests/working_set_loglogn.hpp"
 // #include "tests/unified.hpp"
 // #include "tests/unified_n.hpp"
 using namespace std;
 
 int main(int argc, char **argv) {
-    // testSequential(4096, 20000000, 2, 25);
+    testSequential(2, 4096, 2, 25);
     // testFinger(131072, 2, 4096, 2, 25);
     // testFinger(1024, 131072, 1024, 1024, 2, 25);
     // testRandom(10000, 1000000, 1.2, 25);
