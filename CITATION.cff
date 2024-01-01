@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: tango
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - family-names: Al-Adhami
+    given-names: Khaleel
+    email: adhami@mit.edu
+    affiliation: MIT
+  - family-names: Chheda
+    given-names: Dev
+    orcid: 'https://orcid.org/0009-0007-1178-2940'
+    email: dchheda@mit.edu
+    affiliation: MIT
+repository-code: 'https://github.com/adhami3310/tango'
+keywords:
+  - tango trees
+  - binary search trees
+  - data structures
+license: MIT
+version: 1.0.0
+date-released: '2024-01-01'
